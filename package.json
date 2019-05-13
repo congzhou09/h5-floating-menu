@@ -1,0 +1,26 @@
+{
+  "name": "h5-floating-menu",
+  "version": "1.0.0",
+  "description": "an independent floating menu using native h5, configurable, also hot-pluggable via simply inserting one <script> label into the html file. ",
+  "main": "dist/h5-floating-menu.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/congzhou09/h5-floating-menu.git"
+  },
+  "keywords": ["javascript", "h5", "floating menu"],
+  "author": "yuancongzhou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/congzhou09/h5-floating-menu/issues"
+  },
+  "homepage": "https://github.com/congzhou09/h5-floating-menu#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.31.0"
+  }
+}
