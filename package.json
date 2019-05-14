@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/congzhou09/h5-floating-menu.git"
   },
-  "keywords": ["javascript", "h5", "floating menu"],
+  "keywords": [
+    "javascript",
+    "h5",
+    "floating menu"
+  ],
   "author": "yuancongzhou",
   "license": "ISC",
   "bugs": {
@@ -19,7 +23,7 @@
   "homepage": "https://github.com/congzhou09/h5-floating-menu#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "7",
     "babel-preset-env": "^1.7.0",
     "webpack": "^4.31.0"
   }
