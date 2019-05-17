@@ -33,7 +33,7 @@ class H5FloatingMenu{
         {
             menuItemsHTML += `<div class="h5-floating-menu-item" style="" onclick="${this.theConfig.menuItems[i].callback}">
                 ${this.theConfig.menuItems[i].icon}
-                <span class="h5-floating-menu-item-text" style="position:absolute;width:max-content;">
+                <span class="h5-floating-menu-item-text" style="position:absolute;width:max-content;font-size:${this.theConfig.menuItemTextFontSize}">
                     ${this.theConfig.menuItems[i].text}
                 </span>
             </div>`;
@@ -100,7 +100,7 @@ class H5FloatingMenu{
         let isMenuShow = false;
         let halfWidth = (document.documentElement.clientWidth)/2;
         let halfHeight = (document.documentElement.clientHeight)/2;
-        this.menuEntryDOM.addEventListener('click', (e)=>{
+        this.menuEntryDOM.addEventListener('h5-floating-menu-click', (e)=>{
             if(!isMenuShow)
             {
                 this.showMenu();
@@ -158,8 +158,10 @@ class H5FloatingMenu{
     makeDraggable(oneHtmlDOM){
         let distanceX, distanceY;
         let isMouseDown = false;
+        let hasMouseMoved = false;
         let startFun = (e)=>{
             let startX, startY;
+            hasMouseMoved = false;
             if(e.type === 'touchstart')
             {
                 startX = e.touches[0].pageX;
@@ -175,46 +177,72 @@ class H5FloatingMenu{
             isMouseDown = true;
         };
         let moveFun = (e)=>{
-            if(isMouseDown&& this.isDraggable)
+            if(isMouseDown)
             {
-                let curX, curY;
-                if(e.type === 'touchmove')
+                hasMouseMoved = true;
+                if(this.isDraggable)
                 {
-                    curX = e.touches[0].pageX;
-                    curY = e.touches[0].pageY;
+                    let curX, curY;
+                    if(e.type === 'touchmove')
+                    {
+                        curX = e.touches[0].pageX;
+                        curY = e.touches[0].pageY;
+                    }
+                    else
+                    {
+                        curX = e.pageX;
+                        curY = e.pageY;
+                    }
+                    let elemLeft = (curX - distanceX < 0)?0:curX - distanceX;
+                    let elemTop = (curY - distanceY < 0)?0:curY - distanceY;
+                    if(elemLeft + oneHtmlDOM.offsetWidth > document.documentElement.clientWidth)
+                    {
+                        elemLeft = document.documentElement.clientWidth - oneHtmlDOM.offsetWidth;
+                    }
+                    if(elemTop + oneHtmlDOM.offsetHeight > document.documentElement.clientHeight)
+                    {
+                        elemTop = document.documentElement.clientHeight - oneHtmlDOM.offsetHeight;
+                    }
+                    oneHtmlDOM.style.left =  elemLeft + 'px';
+                    oneHtmlDOM.style.top = elemTop + 'px';
+                    e.preventDefault();
+                }
+            }
+        };
+        let endFun = (e)=>{
+            if(isMouseDown&&!hasMouseMoved)
+            {
+                let clickX, clickY;
+                if(e.type === 'touchend')
+                {
+                    clickX = e.changedTouches[0].clientX;
+                    clickY = e.changedTouches[0].clientY;
                 }
                 else
                 {
-                    curX = e.pageX;
-                    curY = e.pageY;
+                    clickX = e.clientX;
+                    clickY = e.clientY;
                 }
-                let elemLeft = (curX - distanceX < 0)?0:curX - distanceX;
-                let elemTop = (curY - distanceY < 0)?0:curY - distanceY;
-                if(elemLeft + oneHtmlDOM.offsetWidth > document.documentElement.clientWidth)
-                {
-                    elemLeft = document.documentElement.clientWidth - oneHtmlDOM.offsetWidth;
-                }
-                if(elemTop + oneHtmlDOM.offsetHeight > document.documentElement.clientHeight)
-                {
-                    elemTop = document.documentElement.clientHeight - oneHtmlDOM.offsetHeight;
-                }
-                oneHtmlDOM.style.left =  elemLeft + 'px';
-                oneHtmlDOM.style.top = elemTop + 'px';
-                e.preventDefault();
+                
+                //触发自定义click事件
+                this.menuEntryDOM.dispatchEvent(new MouseEvent('h5-floating-menu-click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: clickX,
+                    clientY: clickY
+                }));
             }
+            isMouseDown = false;
         };
         
         oneHtmlDOM.addEventListener('touchstart', startFun);
         oneHtmlDOM.addEventListener('touchmove', moveFun);
-        oneHtmlDOM.addEventListener('touchend', (e)=>{
-            isMouseDown = false;
-        });
+        // oneHtmlDOM.addEventListener('touchend', endFun);
         
         oneHtmlDOM.addEventListener('mousedown', startFun);
         document.addEventListener('mousemove', moveFun);
-        document.addEventListener('mouseup', (e)=>{
-            isMouseDown = false;
-        });
+        document.addEventListener('mouseup', endFun);
     }
 }
 
