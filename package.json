@@ -1,7 +1,7 @@
 {
   "name": "h5-floating-menu",
-  "version": "1.0.0",
-  "description": "an independent floating menu using native h5, configurable, also hot-pluggable via simply inserting one <script> label into the html file. ",
+  "version": "1.0.1",
+  "description": "An independent floating menu using native h5, support for drag and configuration.",
   "main": "dist/h5-floating-menu.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

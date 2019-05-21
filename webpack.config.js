@@ -3,8 +3,8 @@ var Webpack = require("webpack");
 var Path = require('path');
 
 module.exports = {
-    mode: "production",
-    // mode: "development",
+    // mode: "production",
+    mode: "development",
     entry: Path.resolve(__dirname, "./src/index.js"),
     output: {
         path: Path.resolve(__dirname, "./dist"),
@@ -16,7 +16,21 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                options: {
+                    "presets": [
+                        ["@babel/preset-env", {
+                            "modules": "umd",
+                            "targets": {
+                                "browsers": ["last 2 versions", "safari >= 7"]
+                            }
+                        }]
+                    ],
+                    "plugins": [
+                        "@babel/plugin-proposal-class-properties",
+                        "add-module-exports"
+                    ]
+                }
             }
         ]
     },
