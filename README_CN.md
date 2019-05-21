@@ -1,7 +1,7 @@
 [![npm version](https://badge.fury.io/js/h5-floating-menu.svg)](https://badge.fury.io/js/h5-floating-menu)
 
 ### 简介
-通用的H5浮动菜单，兼容PC端Web，根据菜单在页面的位置以不被遮挡的方式展示菜单项的图标和文字，支持拖动与配置。
+通用的H5浮动菜单，独立运行不依赖于第三方库，兼容PC端Web，根据菜单在页面的位置以不被遮挡的方式展示菜单项的图标和文字，支持拖动与配置。
 
 ![](https://raw.githubusercontent.com/congzhou09/h5-floating-menu/HEAD/snapshot/autoadaptation.gif)
 
