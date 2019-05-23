@@ -209,36 +209,47 @@ class H5FloatingMenu{
                 }
             }
         };
+        
         let endFun = (e)=>{
-            if(isMouseDown&&!hasMouseMoved)
+            //触发自定义click事件
+            if(!hasMouseMoved)
             {
-                let clickX, clickY;
-                if(e.type === 'touchend')
+                if(e.changedTouches)
                 {
-                    clickX = e.changedTouches[0].clientX;
-                    clickY = e.changedTouches[0].clientY;
+                    /* ontouchend之后，系统会判断接收到事件的element的内容是否被改变，如果内容被改变，接下来的事 件都不会触发，如果没有改变，会按照mousedown，mouseup，click的顺序触发事件*/
+                    //touchend和mouseup都触发的时候只处理mouseup
+                    return;
                 }
-                else
+                if(isMouseDown)
                 {
-                    clickX = e.clientX;
-                    clickY = e.clientY;
+                    let clickX, clickY;
+                    if(e.type === 'touchend')
+                    {
+                        clickX = e.changedTouches[0].clientX;
+                        clickY = e.changedTouches[0].clientY;
+                    }
+                    else
+                    {
+                        clickX = e.clientX;
+                        clickY = e.clientY;
+                    }
+    
+                    //触发自定义click事件
+                    this.menuEntryDOM.dispatchEvent(new MouseEvent('h5-floating-menu-click', {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window,
+                        clientX: clickX,
+                        clientY: clickY
+                    }));
                 }
-                
-                //触发自定义click事件
-                this.menuEntryDOM.dispatchEvent(new MouseEvent('h5-floating-menu-click', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window,
-                    clientX: clickX,
-                    clientY: clickY
-                }));
             }
             isMouseDown = false;
         };
         
         oneHtmlDOM.addEventListener('touchstart', startFun);
         oneHtmlDOM.addEventListener('touchmove', moveFun);
-        // oneHtmlDOM.addEventListener('touchend', endFun);
+        oneHtmlDOM.addEventListener('touchend', endFun);
         
         oneHtmlDOM.addEventListener('mousedown', startFun);
         document.addEventListener('mousemove', moveFun);
