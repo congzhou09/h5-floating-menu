@@ -1,7 +1,7 @@
 import defaultConfig from './defaultConfig.js'
 
 //检查浏览器环境
-if(!window||!document)
+if(typeof(window)==='undefined' || typeof(document)==='undefined')
 {
     throw new Error('h5-floating-menu info: only support for browser!');
 }
@@ -14,6 +14,16 @@ class H5FloatingMenu{
         this.menuItemsDOM = null;
         this.isDraggable = true;
         this.theConfig =(!!customConfig&&typeof(customConfig)==='object')?Object.assign(defaultConfig, customConfig):defaultConfig;//读取配置
+        this.shellPositionTop = localStorage.getItem('h5-floating-menu-top');
+        if(!this.shellPositionTop)
+        {
+            this.shellPositionTop = 0;
+        }
+        this.shellPositionLeft = localStorage.getItem('h5-floating-menu-left');
+        if(!this.shellPositionLeft)
+        {
+            this.shellPositionLeft = 0;
+        }
     
         //页面载入完成时执行
         if(document.readyState === 'complete')
@@ -64,8 +74,8 @@ class H5FloatingMenu{
         }
         .h5-floating-menu-shell{
             position: fixed;
-            top: ${this.theConfig.initialTop};
-            left: ${this.theConfig.initialLeft};
+            top: ${this.shellPositionTop?this.shellPositionTop:this.theConfig.initialTop};
+            left: ${this.shellPositionLeft?this.shellPositionLeft:this.theConfig.initialLeft};
             z-index:${this.theConfig.zIndex+1};
             display: flex;
             flex-direction: column-reverse;
@@ -210,30 +220,25 @@ class H5FloatingMenu{
             }
         };
         
-        let endFun = (e)=>{
+        let endFun = (e)=> {
             //触发自定义click事件
-            if(!hasMouseMoved)
-            {
-                if(e.changedTouches)
-                {
+            if (!hasMouseMoved) {
+                if (e.changedTouches) {
                     /* ontouchend之后，系统会判断接收到事件的element的内容是否被改变，如果内容被改变，接下来的事 件都不会触发，如果没有改变，会按照mousedown，mouseup，click的顺序触发事件*/
                     //touchend和mouseup都触发的时候只处理mouseup
                     return;
                 }
-                if(isMouseDown)
-                {
+                if (isMouseDown) {
                     let clickX, clickY;
-                    if(e.type === 'touchend')
-                    {
+                    if (e.type === 'touchend') {
                         clickX = e.changedTouches[0].clientX;
                         clickY = e.changedTouches[0].clientY;
                     }
-                    else
-                    {
+                    else {
                         clickX = e.clientX;
                         clickY = e.clientY;
                     }
-    
+            
                     //触发自定义click事件
                     this.menuEntryDOM.dispatchEvent(new MouseEvent('h5-floating-menu-click', {
                         bubbles: true,
@@ -243,6 +248,11 @@ class H5FloatingMenu{
                         clientY: clickY
                     }));
                 }
+            }
+            else
+            {
+                localStorage.setItem('h5-floating-menu-top', oneHtmlDOM.style.top);
+                localStorage.setItem('h5-floating-menu-left', oneHtmlDOM.style.left);
             }
             isMouseDown = false;
         };
