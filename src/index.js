@@ -24,7 +24,7 @@ class H5FloatingMenu{
         {
             this.shellPositionLeft = 0;
         }
-    
+
         //页面载入完成时执行
         if(document.readyState === 'complete')
         {
@@ -38,26 +38,42 @@ class H5FloatingMenu{
         }
     }
     init(){
-        let menuItemsHTML= `<ul style="position: absolute;display:none;padding:0;list-style-type:none;margin: calc(${this.theConfig.menuItemGap} + 1px) 0;">`;
+        let menuItemsDOM = document.createElement('ul');
+        menuItemsDOM.style.cssText = `position: absolute;display:none;padding:0;list-style-type:none;margin: calc(${this.theConfig.menuItemGap} + 1px) 0;`
         for(let i=0;i<this.theConfig.menuItems.length;i++)
         {
-            menuItemsHTML += `<div class="h5-floating-menu-item" style="" onclick="${this.theConfig.menuItems[i].callback}">
-                ${this.theConfig.menuItems[i].icon}
-                <span class="h5-floating-menu-item-text" style="position:absolute;width:max-content;font-size:${this.theConfig.menuItemTextFontSize}">
+            let oneMenuItemDOM = document.createElement('li');
+            oneMenuItemDOM.className = "h5-floating-menu-item";
+            if(H5FloatingMenu.supportTouch())
+            {
+                oneMenuItemDOM.addEventListener('touchend', ()=>{
+                    eval(`${this.theConfig.menuItems[i].callback}`);
+                });
+            }
+            else
+            {
+                oneMenuItemDOM.addEventListener('click', ()=>{
+                    eval(`${this.theConfig.menuItems[i].callback}`);
+                });
+            }
+
+            oneMenuItemDOM.innerHTML = `
+            ${this.theConfig.menuItems[i].icon}
+            <span class="h5-floating-menu-item-text" style="position:absolute;width:max-content;font-size:${this.theConfig.menuItemTextFontSize}">
                     ${this.theConfig.menuItems[i].text}
-                </span>
-            </div>`;
+                </span>`;
+            menuItemsDOM.appendChild(oneMenuItemDOM);
         }
-        menuItemsHTML += `</ul>`;
-    
+
         //添加元素
         this.containerDOM.className = 'h5-floating-menu-shell';
-        this.containerDOM.innerHTML = `<div class="h5-floating-menu-item">${this.theConfig.mainIconClose}</div>${menuItemsHTML}`;
+        this.containerDOM.innerHTML = `<div class="h5-floating-menu-item">${this.theConfig.mainIconClose}</div>`;
         this.containerDOM.style.cssText = '';
+        this.containerDOM.appendChild(menuItemsDOM);
         this.menuEntryDOM = this.containerDOM.querySelector('.h5-floating-menu-item:nth-child(1)');
         this.menuItemsDOM = this.containerDOM.querySelector('ul:nth-of-type(1)');
         document.body.appendChild(this.containerDOM);
-        
+
         this.maskDOM.className = 'h5-floating-menu-mask';
         this.maskDOM.style.cssText = `display:none;position:fixed;width:100%;height:100%;background-color:rgba(10, 10, 10, 0.69);top:0;left:0;z-index:${this.theConfig.zIndex};`;
         document.body.appendChild(this.maskDOM);
@@ -149,6 +165,11 @@ class H5FloatingMenu{
             }
         });
     }
+
+    static supportTouch(){
+        return ('ontouchstart' in document.documentElement);
+    }
+
     showMenu(){
         if(this.maskDOM)
         {
@@ -156,7 +177,7 @@ class H5FloatingMenu{
             this.menuEntryDOM.innerHTML = this.theConfig.mainIconOpen;
         }
     }
-    
+
     hideMenu(){
         if(this.maskDOM)
         {
@@ -164,13 +185,14 @@ class H5FloatingMenu{
             this.menuEntryDOM.innerHTML = this.theConfig.mainIconClose;
         }
     }
-    
+
     makeDraggable(oneHtmlDOM){
         let distanceX, distanceY;
         let isMouseDown = false;
         let hasMouseMoved = false;
+        let startX, startY;
+
         let startFun = (e)=>{
-            let startX, startY;
             hasMouseMoved = false;
             if(e.type === 'touchstart')
             {
@@ -186,48 +208,50 @@ class H5FloatingMenu{
             distanceY = startY - oneHtmlDOM.offsetTop;
             isMouseDown = true;
         };
+
         let moveFun = (e)=>{
-            if(isMouseDown)
+            if(isMouseDown&&this.isDraggable)
             {
-                hasMouseMoved = true;
-                if(this.isDraggable)
+                let curX, curY;
+                if(e.type === 'touchmove')
                 {
-                    let curX, curY;
-                    if(e.type === 'touchmove')
-                    {
-                        curX = e.touches[0].pageX;
-                        curY = e.touches[0].pageY;
-                    }
-                    else
-                    {
-                        curX = e.pageX;
-                        curY = e.pageY;
-                    }
-                    let elemLeft = (curX - distanceX < 0)?0:curX - distanceX;
-                    let elemTop = (curY - distanceY < 0)?0:curY - distanceY;
-                    if(elemLeft + oneHtmlDOM.offsetWidth > document.documentElement.clientWidth)
-                    {
-                        elemLeft = document.documentElement.clientWidth - oneHtmlDOM.offsetWidth;
-                    }
-                    if(elemTop + oneHtmlDOM.offsetHeight > document.documentElement.clientHeight)
-                    {
-                        elemTop = document.documentElement.clientHeight - oneHtmlDOM.offsetHeight;
-                    }
-                    oneHtmlDOM.style.left =  elemLeft + 'px';
-                    oneHtmlDOM.style.top = elemTop + 'px';
-                    e.preventDefault();
+                    curX = e.touches[0].pageX;
+                    curY = e.touches[0].pageY;
                 }
+                else
+                {
+                    curX = e.pageX;
+                    curY = e.pageY;
+                }
+                if(startX!==curX|| startY!==curY)
+                {
+                    hasMouseMoved = true;
+                }
+                let elemLeft = (curX - distanceX < 0)?0:curX - distanceX;
+                let elemTop = (curY - distanceY < 0)?0:curY - distanceY;
+                if(elemLeft + oneHtmlDOM.offsetWidth > document.documentElement.clientWidth)
+                {
+                    elemLeft = document.documentElement.clientWidth - oneHtmlDOM.offsetWidth;
+                }
+                if(elemTop + oneHtmlDOM.offsetHeight > document.documentElement.clientHeight)
+                {
+                    elemTop = document.documentElement.clientHeight - oneHtmlDOM.offsetHeight;
+                }
+                oneHtmlDOM.style.left =  elemLeft + 'px';
+                oneHtmlDOM.style.top = elemTop + 'px';
+                e.preventDefault();
             }
         };
-        
+
         let endFun = (e)=> {
             //触发自定义click事件
             if (!hasMouseMoved) {
-                if (e.changedTouches) {
+                // if (e.changedTouches) {
                     /* ontouchend之后，系统会判断接收到事件的element的内容是否被改变，如果内容被改变，接下来的事 件都不会触发，如果没有改变，会按照mousedown，mouseup，click的顺序触发事件*/
                     //touchend和mouseup都触发的时候只处理mouseup
-                    return;
-                }
+                    // return;
+                //某些前端库(如fastclick)会阻止这个触发mouse相关事件的默认行为，不再使用之前的过滤机制
+                // }
                 if (isMouseDown) {
                     let clickX, clickY;
                     if (e.type === 'touchend') {
@@ -238,7 +262,7 @@ class H5FloatingMenu{
                         clickX = e.clientX;
                         clickY = e.clientY;
                     }
-            
+
                     //触发自定义click事件
                     this.menuEntryDOM.dispatchEvent(new MouseEvent('h5-floating-menu-click', {
                         bubbles: true,
@@ -256,14 +280,19 @@ class H5FloatingMenu{
             }
             isMouseDown = false;
         };
-        
-        oneHtmlDOM.addEventListener('touchstart', startFun);
-        oneHtmlDOM.addEventListener('touchmove', moveFun);
-        oneHtmlDOM.addEventListener('touchend', endFun);
-        
-        oneHtmlDOM.addEventListener('mousedown', startFun);
-        document.addEventListener('mousemove', moveFun);
-        document.addEventListener('mouseup', endFun);
+
+        if (H5FloatingMenu.supportTouch())
+        {
+            oneHtmlDOM.addEventListener('touchstart', startFun);
+            oneHtmlDOM.addEventListener('touchmove', moveFun);
+            oneHtmlDOM.addEventListener('touchend', endFun);
+        }
+        else
+        {
+            oneHtmlDOM.addEventListener('mousedown', startFun);
+            document.addEventListener('mousemove', moveFun);
+            document.addEventListener('mouseup', endFun);
+        }
     }
 }
 

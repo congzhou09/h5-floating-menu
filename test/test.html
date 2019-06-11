@@ -5,18 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="../dist/h5-floating-menu.min.js"></script>
     <title>Document</title>
 </head>
 <body style="margin:0;">
 <div style="overflow: scroll;background-color: #e4f9e8;width: 100%;height:660px;">
-    <div style="width: 100%;height: 1700px;">
-        <span>哈达试试</span>
+    <div id="parent" style="width: 100%;height: 1700px;">
+        <span id="child" style="display:block;width: 200px;height:100px;background-color:indianred;">哈达试试</span>
     </div>
 </div>
 
 <script>
-    new H5FloatingMenu();
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+        new H5FloatingMenu();
+    }, false);
 
 </script>
 </body>
