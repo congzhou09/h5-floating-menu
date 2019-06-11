@@ -1,6 +1,6 @@
 {
   "name": "h5-floating-menu",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "An independent floating menu using native h5, support for drag and configuration.",
   "main": "dist/h5-floating-menu.min.js",
   "scripts": {

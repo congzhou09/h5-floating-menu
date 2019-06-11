@@ -171,7 +171,7 @@ class H5FloatingMenu{
     }
     
     showWhole(){
-        this.containerDOM.style.display = "display";
+        this.containerDOM.style.display = "block";
     }
 
     static supportTouch(){
