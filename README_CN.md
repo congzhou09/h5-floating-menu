@@ -47,3 +47,10 @@ new H5FloatingMenu([_menuConfig_]);
 |text|菜单项文字|字符串|
 |callback|菜单项点击回调JS|字符串，如 \`console.log('客服');\`|
 
+### 函数
+
+#### hideWhole()
+隐藏整个菜单.
+
+#### showWhole()
+显示整个菜单.

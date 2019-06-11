@@ -9,6 +9,8 @@ if(typeof(window)==='undefined' || typeof(document)==='undefined')
 class H5FloatingMenu{
     constructor(customConfig){
         this.containerDOM = document.createElement('div');
+        this.styleDOM = document.createElement('style');
+        this.styleDOM.type = 'text/css';
         this.menuEntryDOM = null;
         this.maskDOM = document.createElement('div');
         this.menuItemsDOM = null;
@@ -80,9 +82,7 @@ class H5FloatingMenu{
         //可拖动
         this.makeDraggable(this.containerDOM);
         //添加样式
-        let theStyleDOM = document.createElement('style');
-        theStyleDOM.type = 'text/css';
-        theStyleDOM.innerHTML = `
+        this.styleDOM.innerHTML = `
         .h5-floating-menu-shell::after{
             content:'';
             display:block;
@@ -121,7 +121,7 @@ class H5FloatingMenu{
             align-items: center;
             margin: ${this.theConfig.menuItemGap} 0;
         }`;
-        document.head.appendChild(theStyleDOM);
+        document.head.appendChild(this.styleDOM);
         //子菜单弹出
         let isMenuShow = false;
         let halfWidth = (document.documentElement.clientWidth)/2;
@@ -164,6 +164,14 @@ class H5FloatingMenu{
                 this.isDraggable = true;
             }
         });
+    }
+    
+    hideWhole(){
+        this.containerDOM.style.display = "none";
+    }
+    
+    showWhole(){
+        this.containerDOM.style.display = "display";
     }
 
     static supportTouch(){
