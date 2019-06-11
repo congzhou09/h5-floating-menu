@@ -3595,7 +3595,7 @@ watchpack@^1.5.0:
 
 webpack-cli@^3.3.3:
   version "3.3.3"
-  resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.3.tgz#8b7587dee369a838eb4722f6cfa711c779011e5f"
+  resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-cli%2Fdownload%2Fwebpack-cli-3.3.3.tgz#8b7587dee369a838eb4722f6cfa711c779011e5f"
   integrity sha1-i3WH3uNpqDjrRyL2z6cRx3kBHl8=
   dependencies:
     chalk "^2.4.1"
