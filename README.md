@@ -46,4 +46,4 @@ properties of the menuItems is as follows：
 |:-:|:-:|:-:|
 |icon|icon of the menu item|string|
 |text|text of the menu item|string|
-|callback|callback js script of the menu item after clicking|string. e.g, `console.log('customer service');`|
+|callback|callback js script of the menu item after clicking|string. e.g, \`console.log('customer service');\`|

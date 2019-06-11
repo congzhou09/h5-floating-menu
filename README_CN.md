@@ -45,5 +45,5 @@ new H5FloatingMenu([_menuConfig_]);
 |:-:|:-:|:-:|
 |icon|菜单项图标|字符串|
 |text|菜单项文字|字符串|
-|callback|菜单项点击回调JS|字符串，如`console.log('客服');`|
+|callback|菜单项点击回调JS|字符串，如 \`console.log('客服');\`|
 
