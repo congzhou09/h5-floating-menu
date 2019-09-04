@@ -29,6 +29,7 @@ the configuration properties are as follows：
 |property|description|type|default|
 |:-:|:-:|:-:|:-:|
 |zIndex|'z-index' property in css|number|11|
+|landscopeMode|whether 'landscope' mode|boolean|false|
 |initialLeft|initial location of the menu, 'left'property in css|number or string|'50%'|
 |initialTop|initial location of the menu, 'top'property in css|number or string|'50%'|
 |menuItemSize|size of the menu item|string|'50px'|

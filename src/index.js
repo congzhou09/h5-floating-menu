@@ -96,6 +96,7 @@ class H5FloatingMenu{
             display: flex;
             flex-direction: column-reverse;
             justify-content: space-between;
+            ${this.theConfig.landscopeMode?'transform: rotate(90deg);-ms-transform:rotate(90deg);-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);-o-transform:rotate(90deg);':''}
         }
         .h5-floating-menu-container-A, .h5-floating-menu-container-B{
             top: ${this.theConfig.menuItemSize};
@@ -135,22 +136,22 @@ class H5FloatingMenu{
                 {
                     if(e.clientY< halfHeight)
                     {
-                        this.menuItemsDOM.className = "h5-floating-menu-container-A";
+                        this.menuItemsDOM.className = this.theConfig.landscopeMode?"h5-floating-menu-container-C":"h5-floating-menu-container-A";
                     }
                     else
                     {
-                        this.menuItemsDOM.className = "h5-floating-menu-container-C";
+                        this.menuItemsDOM.className = this.theConfig.landscopeMode?"h5-floating-menu-container-D":"h5-floating-menu-container-C";
                     }
                 }
                 else
                 {
                     if(e.clientY< halfHeight)
                     {
-                        this.menuItemsDOM.className = "h5-floating-menu-container-B";
+                        this.menuItemsDOM.className = this.theConfig.landscopeMode?"h5-floating-menu-container-A":"h5-floating-menu-container-B";
                     }
                     else
                     {
-                        this.menuItemsDOM.className = "h5-floating-menu-container-D";
+                        this.menuItemsDOM.className = this.theConfig.landscopeMode?"h5-floating-menu-container-B":"h5-floating-menu-container-D";
                     }
                 }
                 isMenuShow = true;

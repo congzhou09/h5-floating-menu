@@ -27,25 +27,26 @@ new H5FloatingMenu([_menuConfig_]);
 
 |配置项|描述|类型|默认值|
 |:-:|:-:|:-:|:-:|
-|zIndex|css属性的z-index|数字|11|
-|initialLeft|菜单初始位置，css属性的left|数字或字符串|'50%'|
-|initialTop|菜单初始位置，css属性的top|数字或字符串|'50%'|
-|menuItemSize|菜单项的大小|字符串|'50px'|
-|menuItemGap|菜单项的间距|字符串|'6px'|
-|menuItemBackgroundColor|菜单项的背景色|字符串|'#fcfcfd'|
-|menuItemTextColor|菜单项的字体颜色|字符串|'#eaffee'|
-|menuItemTextFontSize|菜单项的字体大小|字符串|'14px'|
-|mainIconClose|菜单未展开时的主图标|字符串|'<svg ...此处省略.../svg>'|
-|mainIconOpen|菜单展开时的主图标|字符串|'<svg ...此处省略.../svg>'|
+|zIndex|css属性的z-index|number|11|
+|landscopeMode|是否横屏模式|boolean|false|
+|initialLeft|菜单初始位置，css属性的left|number或string|'50%'|
+|initialTop|菜单初始位置，css属性的top|number或string|'50%'|
+|menuItemSize|菜单项的大小|string|'50px'|
+|menuItemGap|菜单项的间距|string|'6px'|
+|menuItemBackgroundColor|菜单项的背景色|string|'#fcfcfd'|
+|menuItemTextColor|菜单项的字体颜色|string|'#eaffee'|
+|menuItemTextFontSize|菜单项的字体大小|string|'14px'|
+|mainIconClose|菜单未展开时的主图标|string|'<svg ...此处省略.../svg>'|
+|mainIconOpen|菜单展开时的主图标|string|'<svg ...此处省略.../svg>'|
 |menuItems|菜单项|对象数组|[{...每个对象的属性如下...}]|
 
 菜单项对象的属性如下：
 
 |属性|描述|类型|
 |:-:|:-:|:-:|
-|icon|菜单项图标|字符串|
-|text|菜单项文字|字符串|
-|callback|菜单项点击回调JS|字符串，如 \`console.log('客服');\`|
+|icon|菜单项图标|string|
+|text|菜单项文字|string|
+|callback|菜单项点击回调JS|string，如 \`console.log('客服');\`|
 
 ### 函数
 

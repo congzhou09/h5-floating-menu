@@ -1,6 +1,7 @@
 
 export default {
     zIndex: 11,
+    landscopeMode: false,
     initialLeft: '50%',
     initialTop: '50%',
     menuItemSize: '50px',
