@@ -3,7 +3,7 @@
 ### 简介
 通用的H5浮动菜单，独立运行不依赖于第三方库，兼容PC端Web，根据菜单在页面的位置以不被遮挡的方式展示菜单项的图标和文字，支持拖动与配置。
 
-![](https://raw.githubusercontent.com/congzhou09/h5-floating-menu/HEAD/snapshot/autoadaptation.gif)
+![自适应示例gif](https://congzhou09.github.io/h5-floating-menu/snapshot/autoadaptation.gif)
 
 ### 使用
 

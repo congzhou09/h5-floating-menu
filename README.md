@@ -5,7 +5,7 @@ English | [简体中文](https://github.com/congzhou09/h5-floating-menu/blob/HEA
 ### Intro
 A common floating H5 menu, independent of any third-part libraries, compatibility with PC Web, showing the text and icon of menu items in a no-blocked way based on the location of the menu, support for drag and configuration.
 
-![](https://raw.githubusercontent.com/congzhou09/h5-floating-menu/HEAD/snapshot/autoadaptation.gif)
+![autoadaptation demo gif](https://congzhou09.github.io/h5-floating-menu/snapshot/autoadaptation.gif)
 
 ### Usage
 
