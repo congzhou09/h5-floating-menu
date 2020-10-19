@@ -1,6 +1,7 @@
 var pkg = require('./package.json');
 var Webpack = require("webpack");
 var Path = require('path');
+var TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     mode: "production",
@@ -10,27 +11,21 @@ module.exports = {
         path: Path.resolve(__dirname, "./dist"),
         filename: "h5-floating-menu.min.js",
         library: 'H5FloatingMenu',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        libraryExport: 'default'
+    },
+    optimization:{
+        minimizer: [
+            new TerserPlugin({
+              extractComments: false
+            }),
+        ],
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                loader: "babel-loader",
-                options: {
-                    "presets": [
-                        ["@babel/preset-env", {
-                            "modules": "umd",
-                            "targets": {
-                                "browsers": ["last 2 versions", "safari >= 7"]
-                            }
-                        }]
-                    ],
-                    "plugins": [
-                        "@babel/plugin-proposal-class-properties",
-                        "add-module-exports"
-                    ]
-                }
+                loader: "babel-loader"
             }
         ]
     },
