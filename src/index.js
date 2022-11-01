@@ -40,7 +40,7 @@ class H5FloatingMenu {
    */
   init() {
     const menuItemsDOM = document.createElement('ul');
-    menuItemsDOM.style.cssText = `position: absolute;display:none;padding:0;list-style-type:none;margin: calc(${this.theConfig.menuItemGap} + 1px) 0;`;
+    menuItemsDOM.style.cssText = `position: absolute;display:none;padding:0;list-style-type:none;margin: 1px 0;`;
     for (let i = 0; i < this.theConfig.menuItems.length; i++) {
       const oneMenuItemDOM = document.createElement('li');
       oneMenuItemDOM.className = 'h5-floating-menu-item';
@@ -119,6 +119,8 @@ class H5FloatingMenu {
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .h5-floating-menu-container .h5-floating-menu-item{
             margin: ${this.theConfig.menuItemGap} 0;
         }`;
     document.head.appendChild(this.styleDOM);
@@ -130,19 +132,21 @@ class H5FloatingMenu {
       if (!isMenuShow) {
         this.showMenu();
         this.menuItemsDOM.style.display = 'block';
+        let extClassName = '';
         if (e.clientX < halfWidth) {
           if (e.clientY < halfHeight) {
-            this.menuItemsDOM.className = this.theConfig.landscopeMode ? 'h5-floating-menu-container-C' : 'h5-floating-menu-container-A';
+            extClassName = this.theConfig.landscopeMode ? 'h5-floating-menu-container-C' : 'h5-floating-menu-container-A';
           } else {
-            this.menuItemsDOM.className = this.theConfig.landscopeMode ? 'h5-floating-menu-container-D' : 'h5-floating-menu-container-C';
+            extClassName = this.theConfig.landscopeMode ? 'h5-floating-menu-container-D' : 'h5-floating-menu-container-C';
           }
         } else {
           if (e.clientY < halfHeight) {
-            this.menuItemsDOM.className = this.theConfig.landscopeMode ? 'h5-floating-menu-container-A' : 'h5-floating-menu-container-B';
+            extClassName = this.theConfig.landscopeMode ? 'h5-floating-menu-container-A' : 'h5-floating-menu-container-B';
           } else {
-            this.menuItemsDOM.className = this.theConfig.landscopeMode ? 'h5-floating-menu-container-B' : 'h5-floating-menu-container-D';
+            extClassName = this.theConfig.landscopeMode ? 'h5-floating-menu-container-B' : 'h5-floating-menu-container-D';
           }
         }
+        this.menuItemsDOM.className = `h5-floating-menu-container ${extClassName}`;
         isMenuShow = true;
         this.isDraggable = false;
       } else {
